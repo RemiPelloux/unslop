@@ -12,7 +12,7 @@ This file replaces each default with a specific decision. It is long because the
 
 With a coding agent:
 
-1. Put this whole file in the agent's context, or put Part 1 and Part 6.1 to 6.6 in the system prompt and the rest in a retrievable docs folder.
+1. Put this whole file in the agent's context, or put Part 1 and the agent instructions block from Part 6.7 in the system prompt and the rest in a docs folder the agent can search.
 2. Tell the agent which parts apply to the task: Parts 2 to 6 for interface work, Parts 7 and 8 for any text a person will read, Part 9 before merging.
 3. Run the checks in Part 9 on the agent's output. Do not trust a claim of compliance; grep for it.
 

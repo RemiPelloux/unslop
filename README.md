@@ -1,6 +1,6 @@
 # unslop
 
-`UNSLOP.md` is a single Markdown file, over 927,400 characters long, that tells AI coding agents (and people) how to build interfaces and write copy that do not look machine-made.
+`UNSLOP.md` is a single Markdown file, 1,256,340 characters long (target: over 927,400), that tells AI coding agents (and people) how to build interfaces and write copy that do not look machine-made.
 
 It bans, with exact values and a check for each rule:
 
