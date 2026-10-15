@@ -41,7 +41,7 @@ Light theme:
   --paper-3: #E5E1D6;    /* pressed / selected surface */
   --ink: #1A1A18;        /* primary text, strong rules */
   --ink-2: #4A4843;      /* secondary text */
-  --ink-3: #6F6C64;      /* tertiary text, placeholders (4.6:1 on --paper) */
+  --ink-3: #6F6C64;      /* tertiary text, placeholders (4.8:1 on --paper) */
   --rule: #D9D5CB;       /* default 1px border */
   --rule-strong: #1A1A18;/* emphasis border, focus ring base */
   --accent: #B4441C;     /* burnt orange; one accent per product */
