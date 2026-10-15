@@ -39,7 +39,7 @@ These hold everywhere, with no exceptions for a deadline, a client request, or a
 5. **No banned words.** None of the 350 entries in Part 7 appear in shipped copy, in any form. If a sentence needs one of them to stand up, the sentence has nothing to say. Rewrite it with the specific claim, or delete it.
 6. **No glass, glow, blur or neon.** `backdrop-filter`, frosted panels, outer glows, and animated borders are banned. Part 2.8.
 7. **Radius is 0 or 2px.** Never above 4px on any rectangle. Circles are allowed only for avatars and radio buttons. Part 2.7.
-8. **One accent color, outside the blue-violet band.** Hue between roughly 230 and 320 degrees in OKLCH is off limits for the brand accent. Links may be underlined ink instead. Part 2.3.
+8. **One accent color, outside the blue-violet band.** Hue between 235 and 335 degrees in OKLCH is off limits for the brand accent. Links may be underlined ink instead. Part 2.3.
 9. **No em dashes, no exclamation marks in interface copy.** Use a period or a comma. Part 8.
 10. **Show the real thing.** Real screenshots, real numbers with units and dates, real names with permission. No 3D blobs, no isometric illustrations, no stock photos of a smiling team around a laptop, no testimonials you cannot source. Part 3.8 and Part 5.
 

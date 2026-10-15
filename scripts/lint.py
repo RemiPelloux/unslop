@@ -40,6 +40,7 @@ CODE_RULES = [
     (re.compile(r"text-shadow\s*:(?!\s*none\b)", re.I), "text-shadow other than none"),
     (re.compile(r"drop-shadow\s*\(", re.I), "drop-shadow filter"),
     (re.compile(r"(?<![\w-])shadow(-(sm|md|lg|xl|2xl|inner|\[))?(?![\w-])"), "Tailwind shadow utility"),
+    (re.compile(r"(?<![\w-])ring-(1|2|4|8|inset|offset-\d|\[[^\]]*\]|[a-z]+-\d{2,3})(?![\w-])"), "Tailwind ring utility (compiles to box-shadow)"),
     (re.compile(r"(linear|radial|conic|repeating-linear|repeating-radial)-gradient\s*\(", re.I), "CSS gradient"),
     (re.compile(r"(?<![\w-])bg-(gradient|linear|radial|conic)-"), "Tailwind gradient utility"),
     (re.compile(r"(?<![\w-])(from|via|to)-(blue|indigo|violet|purple|fuchsia|sky|cyan)-\d"), "gradient color stop"),
