@@ -1,0 +1,35 @@
+## Part 7. The Lexicon
+
+### 7.0 How the ban works
+
+The Lexicon lists 350 words and phrases that appear far more often in model output than in writing by people who know their subject. Each one is banned in prose: in interface copy, docs, READMEs, commit messages, release notes, error messages, and in this file.
+
+The ban covers every form of an entry. `leverage` covers `leverages`, `leveraged` and `leveraging`. `optimize` covers `optimization` and the British `optimise`. `seamless` covers `seamlessly`. Hyphenated entries match with or without the hyphen, so `cutting-edge` also catches `cutting edge`. Phrases match across any whitespace and with straight or curly apostrophes.
+
+There are no exceptions in prose. When the literal meaning is needed, each entry says what to write instead, or the word goes inside inline code where it is plainly a name and not a claim.
+
+#### Why these words
+
+The list is not a list of bad words. `Robust` and `essential` are fine English. They are on the list because models reach for them as a reflex, to fill the slot where a specific claim should go. `A robust API` says nothing a reader can check. "An API that retries failed writes three times with backoff" does. Readers have learned the reflex, and one occurrence is enough to make them skim the rest.
+
+The entries fall into five groups:
+
+1. **Verbs of inflated action** (001 to 070): `delve`, `leverage`, `unlock`, `elevate`. They promise a change without naming it.
+2. **Adjectives of unearned praise** (071 to 205): `seamless`, `robust`, `intuitive`, `stunning`. They grade the product instead of describing it.
+3. **Nouns of borrowed grandeur** (206 to 272): `tapestry`, `journey`, `ecosystem`, `solution`. They swap a concrete thing for a metaphor.
+4. **Connectives and intensifiers** (273 to 298): `furthermore`, `moreover`, `ultimately`, `truly`. They add length and a tone of authority, and no meaning.
+5. **Stock phrases, openers and closers** (299 to 350): `in today's`, `let's dive`, `i hope this helps`. They are the frame a model puts around content when it has no content.
+
+#### How each entry is laid out
+
+- **Kind and banned forms.** Every form the linter matches.
+- **Why it reads as machine text.** The concrete reason, so you can spot its cousins that are not on the list.
+- **Where it shows up.** The contexts where it does the most damage.
+- **Bad examples** in `slop` fences.
+- **Replace with.** Plain options, each with the situation it fits. Often the best option is to cut.
+- **Rewrites.** Three before and after pairs.
+- **Literal use.** What to write when you mean the word's original, literal sense.
+
+#### The one test
+
+Delete the banned word and read the sentence again. If it still makes the same claim, the word was decoration: leave it out. If the sentence collapses, it never had a claim: find out what is true, and write that.
