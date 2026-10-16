@@ -126,6 +126,7 @@ def main():
     print("wrote %s from %d parts" % (os.path.relpath(OUT, ROOT), len(files)))
     status = subprocess.call([sys.executable, os.path.join(ROOT, "scripts", "lint.py"), OUT])
     status |= subprocess.call([sys.executable, os.path.join(ROOT, "scripts", "build_skill.py")])
+    status |= subprocess.call([sys.executable, os.path.join(ROOT, "scripts", "eval_search.py")])
     return status
 
 

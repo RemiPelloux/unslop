@@ -10,12 +10,12 @@ metadata:
 
 Rules for interfaces and copy that do not carry the generated look: no indigo buttons, no `rounded-2xl shadow-lg` cards, no gradient headlines, no emoji, no LIVE pills, no `seamless` or `unlock`. Every rule has values and a check.
 
-This file holds the rules you need on every task. The full handbook ({{TOTAL_CHARS}} characters) is split into chapters under `references/`. Read only the chapters the task touches. All paths below are relative to the folder this file is in.
+This file holds the rules you need on every task. The full handbook ({{TOTAL_CHARS}} characters) sits under `references/`, behind a deep index that points to exact line ranges, so a task reads a few thousand characters instead of a million. All paths below are relative to the folder this file is in.
 
 ## Workflow
 
-1. **Before writing interface code:** apply the hard rules and tokens below. For each component or page type in the task, open its chapter from the index at the end of this file (for example a pricing page: `5.5`, `6.14`).
-2. **Before writing copy:** apply the copy rules below. The most frequent banned words are listed here; the full list of 350 is `references/banned-words.txt`. When a word feels like filler, search for it there, then read its entry through `references/lexicon-index.md`.
+1. **Before writing interface code:** apply the hard rules and tokens below, then pull the sections for the task: `python3 scripts/find.py --task NAME` (routes are listed at the end of this file). Read only the line ranges it prints.
+2. **Before writing copy:** apply the copy rules below. Run your draft through `python3 scripts/find.py --text "..."`: it names every banned word with its replacements, without opening any file.
 3. **Before you finish:** run the checks and fix everything they report.
 
 ```sh
@@ -33,8 +33,26 @@ These are the entries models produce most. Any form counts. The other entries ar
 
 {{TOP_WORDS}}
 
-## Reference index
+## Finding anything
 
-Each chapter is one file. Sizes are in thousands of characters, so you can judge the cost of reading one.
+Do not read whole chapters, and never read `references/index.json` itself. Ask the index, then read only the lines it names.
+
+```sh
+python3 scripts/find.py --task dashboard          # reading list for a kind of task, with line ranges and cost
+python3 scripts/find.py focus ring on a button    # the best sections for any question, ranked
+python3 scripts/find.py modal --show              # ... and print the best one
+python3 scripts/find.py dark mode --budget 4000   # ... or print hits until 4,000 characters
+python3 scripts/find.py --code dialog --lang css  # reference code blocks only
+python3 scripts/find.py --section 4.6/rules       # one section by id
+python3 scripts/find.py --chapter 4.6             # every section of a chapter
+python3 scripts/find.py --word leveraging         # the banned entry behind any word form
+python3 scripts/find.py --text "draft copy"       # every banned word in a draft, with replacements
+```
+
+Every hit prints `path:start-end` and its size. Read those lines with your file tool's offset and limit, or with `sed -n 'START,ENDp' PATH`. Add `--json` for machine output. Without Python, search `references/DEEP-INDEX.md`: one line per section, with its id, line range, size and distinctive terms.
+
+## Task routes
+
+Each route lists the rules, reference code and states of the chapters a task needs, in reading order. Run `python3 scripts/find.py --task ID` for the exact line ranges.
 
 {{INDEX}}

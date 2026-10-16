@@ -11,7 +11,7 @@ It bans, with exact values and a check for each rule:
 - glass, blur, glow, `rounded-2xl`
 - 350 words and phrases that models overuse, in every inflection
 
-The handbook behind it, `UNSLOP.md`, is 1,256,340 characters. The skill splits it into 487 small files so an agent reads only what the task needs: `SKILL.md` (about 300 lines) holds the rules for every task, and points to one file per chapter and one file per banned word.
+The handbook behind it, `UNSLOP.md`, is 1,256,340 characters. An agent never reads it whole. `SKILL.md` (about 3,600 tokens) holds the rules for every task, and a deep index sends the agent to the exact lines a task needs.
 
 ## Install
 
@@ -60,6 +60,40 @@ Each one writes the rules file and copies the skill to `.agents/skills/unslop/`,
 
 Paste `dist/system-prompt.md` into the system prompt. It needs no files: it holds the hard rules, the tokens, the copy rules and all 350 banned words.
 
+## Deep index
+
+`references/index.json` maps the whole handbook down to 1,043 sections, each with an exact line range, a size and a kind (rules, reference code, slop example, states, copy, checklist, lexicon entry). On top of that it holds a BM25 index of 9,894 terms, the location of all 387 reference code blocks, the replacements for all 350 banned entries, and 34 task routes. `scripts/find.py` queries it with nothing but the Python standard library:
+
+```sh
+python3 .agents/skills/unslop/scripts/find.py --task pricing          # what to read for a pricing page, line by line
+python3 .agents/skills/unslop/scripts/find.py focus ring on a button  # ranked sections for any question
+python3 .agents/skills/unslop/scripts/find.py --code dialog --lang css
+python3 .agents/skills/unslop/scripts/find.py --text "Unlock seamless workflows"
+```
+
+```text
+'Unlock' -> 005. unlock   references/07-the-lexicon/entries/005-unlock.md
+       - `lets you` or `you can now`, followed by the action.
+       - `includes` for plan comparisons: say what the plan includes.
+       - Cut it when the result can be named directly.
+'seamless' -> 071. seamless   references/07-the-lexicon/entries/071-seamless.md
+       - The step count: "connects to GitHub in two clicks, with no API key". Use when setup is short enough to count.
+       ...
+```
+
+What it costs an agent, measured on this build:
+
+| | |
+| --- | --- |
+| Loaded when the skill activates | `SKILL.md`, 14k characters, about 3,600 tokens |
+| Average task route | about 2,700 tokens, 55% less than the chapters it draws from, under 1% of the handbook |
+| Median section | 1,300 characters |
+| One search, including Python start-up | about 70 ms |
+| Index size | 710 KB (postings delta-encoded in base 36) |
+| Retrieval on `tests/search_eval.json` | 34 queries, correct section in the top 3 for 97% |
+
+`references/DEEP-INDEX.md` has the same sections as one greppable line each, for agents without Python. The build checks that every range in the index lands on the heading it names, and fails if top-3 retrieval drops below 85%.
+
 ## Checks
 
 The skill ships two scripts with no dependencies beyond Python 3. Agents are told to run them before finishing and report the output.
@@ -85,6 +119,10 @@ python3 .agents/skills/unslop/scripts/lint.py README.md   # Markdown, stricter o
 | `src/AUTHORING.md` | Rules for anyone editing the parts. |
 | `scripts/build.py` | Builds `UNSLOP.md`, then the skill and `dist/`, and lints all of it. |
 | `scripts/install.py` | Installs the skill for one or more tools. |
+| `scripts/build_index.py` | Builds the deep index and `DEEP-INDEX.md`. |
+| `scripts/find.py` | Searches the deep index. Copied into the skill. |
+| `scripts/eval_search.py` | Checks every index range and measures retrieval on `tests/search_eval.json`. |
+| `src/skill/routes.json`, `aliases.json` | Task routes and search synonyms. |
 
 ## Build
 
@@ -92,4 +130,4 @@ python3 .agents/skills/unslop/scripts/lint.py README.md   # Markdown, stricter o
 python3 scripts/build.py
 ```
 
-The build fails if the linter finds a single problem in the handbook, the skill or the adapters. Bump `VERSION` and the two files in `.claude-plugin/` together when you release.
+The build fails if the linter finds a single problem in the handbook, the skill or the adapters, if any index range is off, or if retrieval falls below the floor. Bump `VERSION` and the two files in `.claude-plugin/` together when you release.

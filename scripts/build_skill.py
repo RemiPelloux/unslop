@@ -8,7 +8,11 @@ Outputs:
     agents/openai.yaml           Codex display metadata
     references/                  the handbook, one file per chapter, and one
                                  file per lexicon entry
+    references/index.json        deep index: sections, line ranges, BM25 postings,
+                                 code blocks, replacements, task routes
+    references/DEEP-INDEX.md     the same sections, one greppable line each
     scripts/lint.py, scan.py     the checks
+    scripts/find.py              search and lookup over the deep index
   dist/
     unslop-skill.zip             the skill folder, for upload to claude.ai or the API
     AGENTS.md                    Codex, Jules, Amp, and any AGENTS.md reader
@@ -19,12 +23,16 @@ Outputs:
 
 Run through scripts/build.py, or alone.
 """
+import json
 import os
 import re
 import shutil
 import subprocess
 import sys
 import zipfile
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import build_index  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "src")
@@ -159,6 +167,24 @@ def build_references(parts):
     return table("references/"), len(lexicon)
 
 
+def routes_table(routes):
+    lines = ["| Task | Run | Chapters | Cost |", "| --- | --- | --- | --- |"]
+    for r in routes:
+        lines.append("| %s | `--task %s` | %s | ~%dk tokens |" % (
+            r["label"], r["id"], ", ".join(r["chapters"]), max(1, round(r["chars"] / 4000))))
+    return "\n".join(lines)
+
+
+def parts_list(parts):
+    lines = ["Parts, for browsing. Every chapter and its file: `references/INDEX.md`. Every section with its line range: `references/DEEP-INDEX.md`.", ""]
+    for p in parts:
+        if p["num"] == 10:
+            continue
+        chaps = p["chapters"]
+        lines.append("- Part %d. %s (%s to %s)" % (p["num"], p["title"], "%d.%d" % chaps[0]["num"], "%d.%d" % chaps[-1]["num"]))
+    return "\n".join(lines)
+
+
 def main():
     parts_md = "\n\n".join(read(os.path.join(PARTS, f)).strip("\n")
                            for f in sorted(os.listdir(PARTS)) if f.endswith(".md"))
@@ -170,9 +196,17 @@ def main():
     total_chars = len(read(os.path.join(ROOT, "UNSLOP.md"))) if os.path.exists(os.path.join(ROOT, "UNSLOP.md")) else len(parts_md)
 
     os.makedirs(SKILL, exist_ok=True)
-    index, n_entries = build_references(parts)
+    _, n_entries = build_references(parts)
     if n_entries != len(all_words):
         sys.exit("build_skill: lexicon has %d entries, banned-words.txt has %d" % (n_entries, len(all_words)))
+    with open(os.path.join(TPL, "routes.json"), encoding="utf-8") as f:
+        routes_spec = json.load(f)
+    with open(os.path.join(TPL, "aliases.json"), encoding="utf-8") as f:
+        aliases = json.load(f)
+    stats = build_index.build(SKILL, routes_spec, aliases)
+    print("index: %d sections, %d terms, %d code blocks, %d routes, %d KB" % (
+        stats["sections"], stats["terms"], stats["code"], len(stats["routes"]), stats["bytes"] // 1024))
+    index = routes_table(stats["routes"]) + "\n\n" + parts_list(parts)
 
     skill_md = (read(os.path.join(TPL, "SKILL.md.in"))
                 .replace("{{VERSION}}", version)
@@ -184,7 +218,7 @@ def main():
     os.makedirs(os.path.join(SKILL, "agents"), exist_ok=True)
     shutil.copy(os.path.join(TPL, "agents", "openai.yaml"), os.path.join(SKILL, "agents", "openai.yaml"))
     os.makedirs(os.path.join(SKILL, "scripts"), exist_ok=True)
-    for name in ("lint.py", "scan.py"):
+    for name in ("lint.py", "scan.py", "find.py"):
         shutil.copy(os.path.join(ROOT, "scripts", name), os.path.join(SKILL, "scripts", name))
 
     adapter = (read(os.path.join(TPL, "adapter.md.in"))

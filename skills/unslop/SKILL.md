@@ -10,12 +10,12 @@ metadata:
 
 Rules for interfaces and copy that do not carry the generated look: no indigo buttons, no `rounded-2xl shadow-lg` cards, no gradient headlines, no emoji, no LIVE pills, no `seamless` or `unlock`. Every rule has values and a check.
 
-This file holds the rules you need on every task. The full handbook (1,256,340 characters) is split into chapters under `references/`. Read only the chapters the task touches. All paths below are relative to the folder this file is in.
+This file holds the rules you need on every task. The full handbook (1,256,340 characters) sits under `references/`, behind a deep index that points to exact line ranges, so a task reads a few thousand characters instead of a million. All paths below are relative to the folder this file is in.
 
 ## Workflow
 
-1. **Before writing interface code:** apply the hard rules and tokens below. For each component or page type in the task, open its chapter from the index at the end of this file (for example a pricing page: `5.5`, `6.14`).
-2. **Before writing copy:** apply the copy rules below. The most frequent banned words are listed here; the full list of 350 is `references/banned-words.txt`. When a word feels like filler, search for it there, then read its entry through `references/lexicon-index.md`.
+1. **Before writing interface code:** apply the hard rules and tokens below, then pull the sections for the task: `python3 scripts/find.py --task NAME` (routes are listed at the end of this file). Read only the line ranges it prints.
+2. **Before writing copy:** apply the copy rules below. Run your draft through `python3 scripts/find.py --text "..."`: it names every banned word with its replacements, without opening any file.
 3. **Before you finish:** run the checks and fix everything they report.
 
 ```sh
@@ -113,186 +113,73 @@ indeed, truly, in today's, the power of, the future of, with ease, made simple, 
 when it comes to, whether you're, more than just, look no further
 ```
 
-## Reference index
+## Finding anything
 
-Each chapter is one file. Sizes are in thousands of characters, so you can judge the cost of reading one.
+Do not read whole chapters, and never read `references/index.json` itself. Ask the index, then read only the lines it names.
 
-### Part 1. Ground Rules
+```sh
+python3 scripts/find.py --task dashboard          # reading list for a kind of task, with line ranges and cost
+python3 scripts/find.py focus ring on a button    # the best sections for any question, ranked
+python3 scripts/find.py modal --show              # ... and print the best one
+python3 scripts/find.py dark mode --budget 4000   # ... or print hits until 4,000 characters
+python3 scripts/find.py --code dialog --lang css  # reference code blocks only
+python3 scripts/find.py --section 4.6/rules       # one section by id
+python3 scripts/find.py --chapter 4.6             # every section of a chapter
+python3 scripts/find.py --word leveraging         # the banned entry behind any word form
+python3 scripts/find.py --text "draft copy"       # every banned word in a draft, with replacements
+```
 
-| Chapter | File | Size |
-| --- | --- | --- |
-| 1.1 What this file is for | `references/01-ground-rules/01.01-what-this-file-is-for.md` | 1k |
-| 1.2 How to use it | `references/01-ground-rules/01.02-how-to-use-it.md` | 1k |
-| 1.3 The hard rules | `references/01-ground-rules/01.03-the-hard-rules.md` | 2k |
-| 1.4 The soft rules | `references/01-ground-rules/01.04-the-soft-rules.md` | 1k |
-| 1.5 The signature, in one table | `references/01-ground-rules/01.05-the-signature-in-one-table.md` | 2k |
-| 1.6 Tokens at a glance | `references/01-ground-rules/01.06-tokens-at-a-glance.md` | 2k |
-| 1.7 How the rules are worded | `references/01-ground-rules/01.07-how-the-rules-are-worded.md` | 1k |
-| 1.8 What this file does not do | `references/01-ground-rules/01.08-what-this-file-does-not-do.md` | 1k |
-| 1.9 Checklist for Part 1 | `references/01-ground-rules/01.09-checklist-for-part-1.md` | 1k |
+Every hit prints `path:start-end` and its size. Read those lines with your file tool's offset and limit, or with `sed -n 'START,ENDp' PATH`. Add `--json` for machine output. Without Python, search `references/DEEP-INDEX.md`: one line per section, with its id, line range, size and distinctive terms.
 
-### Part 2. Color, Surfaces and Depth
+## Task routes
 
-| Chapter | File | Size |
-| --- | --- | --- |
-| 2.0 Overview | `references/02-color-surfaces-and-depth/02.00-overview.md` | 1k |
-| 2.1 Why generated interfaces all look alike | `references/02-color-surfaces-and-depth/02.01-why-generated-interfaces-all-look-alike.md` | 9k |
-| 2.2 The gradient ban | `references/02-color-surfaces-and-depth/02.02-the-gradient-ban.md` | 11k |
-| 2.3 Building a palette that is not the default | `references/02-color-surfaces-and-depth/02.03-building-a-palette-that-is-not-the-default.md` | 21k |
-| 2.4 Semantic color | `references/02-color-surfaces-and-depth/02.04-semantic-color.md` | 9k |
-| 2.5 Depth without shadows | `references/02-color-surfaces-and-depth/02.05-depth-without-shadows.md` | 14k |
-| 2.6 Borders and rules | `references/02-color-surfaces-and-depth/02.06-borders-and-rules.md` | 9k |
-| 2.7 Corner radius | `references/02-color-surfaces-and-depth/02.07-corner-radius.md` | 5k |
-| 2.8 Glass, blur, glow, noise and neon | `references/02-color-surfaces-and-depth/02.08-glass-blur-glow-noise-and-neon.md` | 5k |
-| 2.9 Dark mode done by hand | `references/02-color-surfaces-and-depth/02.09-dark-mode-done-by-hand.md` | 7k |
-| 2.10 Data and chart color | `references/02-color-surfaces-and-depth/02.10-data-and-chart-color.md` | 9k |
-| 2.11 Color in code | `references/02-color-surfaces-and-depth/02.11-color-in-code.md` | 9k |
-| 2.12 Review checklist for Part 2 | `references/02-color-surfaces-and-depth/02.12-review-checklist-for-part-2.md` | 2k |
+Each route lists the rules, reference code and states of the chapters a task needs, in reading order. Run `python3 scripts/find.py --task ID` for the exact line ranges.
 
-### Part 3. Type, Space, Layout, Icons and Motion
+| Task | Run | Chapters | Cost |
+| --- | --- | --- | --- |
+| Marketing or SaaS landing page | `--task landing-page` | 4.20, 4.21, 5.16, 5.18, 5.19, 4.18, 6.8, 8.8 | ~4k tokens |
+| AI product page or chat assistant UI | `--task ai-product` | 5.24, 6.17, 4.21 | ~2k tokens |
+| Developer tool or open source project site | `--task devtool-site` | 6.9, 4.10, 8.8 | ~2k tokens |
+| Dashboard or analytics screen | `--task dashboard` | 5.25, 4.8, 4.12, 5.1, 2.10, 6.10 | ~4k tokens |
+| Settings or admin area | `--task settings` | 5.9, 4.19, 4.9, 5.8, 5.11 | ~4k tokens |
+| Forms and inputs | `--task forms` | 4.19, 4.9, 5.8, 4.13, 4.17, 8.6 | ~4k tokens |
+| Sign in, sign up, password reset | `--task auth` | 5.23, 4.19, 8.6 | ~2k tokens |
+| Pricing page or plan comparison | `--task pricing` | 5.5, 5.21, 6.14, 8.7 | ~2k tokens |
+| Documentation site | `--task docs-site` | 6.12, 4.10, 5.7, 4.5, 3.3 | ~3k tokens |
+| Blog or long-form article page | `--task blog` | 6.13, 3.1, 3.2, 3.3 | ~2k tokens |
+| Personal portfolio | `--task portfolio` | 6.11, 3.8 | ~1k tokens |
+| E-commerce product page | `--task ecommerce` | 6.19, 4.6 | ~2k tokens |
+| Mobile app marketing page | `--task mobile-app-page` | 6.15, 3.8 | ~1k tokens |
+| Design system, tokens and base styles | `--task design-system` | 6.1, 2.3, 2.9, 6.5 | ~5k tokens |
+| Tailwind setup without shadows or gradients | `--task tailwind` | 6.2, 6.3, 2.11 | ~3k tokens |
+| shadcn/ui component overrides | `--task shadcn` | 6.4 | ~3k tokens |
+| Palette, accent and semantic color | `--task color` | 2.3, 2.4, 2.2 | ~4k tokens |
+| Dark mode | `--task dark-mode` | 2.9 | ~1k tokens |
+| Depth without shadows: cards, overlays, layers | `--task depth` | 2.5, 2.6, 4.7 | ~3k tokens |
+| Modals, menus, popovers, tooltips | `--task overlays` | 4.14, 4.15, 4.25, 5.14, 2.5 | ~3k tokens |
+| Navigation: header, sidebar, tabs, breadcrumbs | `--task navigation` | 4.20, 5.1, 5.11, 4.5, 5.4, 3.6 | ~4k tokens |
+| Status, live indicators, badges | `--task status` | 4.4, 5.2, 2.4 | ~3k tokens |
+| Empty, loading and error states | `--task states` | 4.16, 4.24, 5.22, 8.6 | ~2k tokens |
+| Typefaces and type scale | `--task typography` | 3.1, 3.2, 3.3 | ~3k tokens |
+| Spacing, grid and responsive layout | `--task layout` | 3.4, 3.5, 3.6 | ~3k tokens |
+| Animation and motion | `--task motion` | 3.9 | ~2k tokens |
+| Accessibility checks | `--task accessibility` | 3.10 | ~1k tokens |
+| Icons, screenshots and images | `--task icons-images` | 3.7, 3.8 | ~2k tokens |
+| Interface copy: buttons, errors, empty states | `--task ui-copy` | 8.6, 8.7, 8.5 | ~3k tokens |
+| Headlines and marketing copy | `--task marketing-copy` | 8.2, 8.3, 8.8, 8.10 | ~3k tokens |
+| README, commit messages, PRs, release notes | `--task dev-writing` | 8.8, 8.5 | ~2k tokens |
+| Prompting a model for plain copy | `--task prompting` | 8.11, 6.7 | ~2k tokens |
+| Review or audit an existing product | `--task audit` | 9.1, 9.2, 9.7, 9.8 | ~4k tokens |
+| CI, lint and pre-commit enforcement | `--task enforcement` | 9.5, 9.6, 6.6 | ~3k tokens |
 
-| Chapter | File | Size |
-| --- | --- | --- |
-| 3.0 Overview | `references/03-type-space-layout-icons-and-motion/03.00-overview.md` | 1k |
-| 3.1 Typefaces | `references/03-type-space-layout-icons-and-motion/03.01-typefaces.md` | 17k |
-| 3.2 Type scale and hierarchy | `references/03-type-space-layout-icons-and-motion/03.02-type-scale-and-hierarchy.md` | 14k |
-| 3.3 Text details | `references/03-type-space-layout-icons-and-motion/03.03-text-details.md` | 14k |
-| 3.4 Spacing system | `references/03-type-space-layout-icons-and-motion/03.04-spacing-system.md` | 9k |
-| 3.5 Layout and grid | `references/03-type-space-layout-icons-and-motion/03.05-layout-and-grid.md` | 12k |
-| 3.6 Responsive behavior | `references/03-type-space-layout-icons-and-motion/03.06-responsive-behavior.md` | 11k |
-| 3.7 Icons | `references/03-type-space-layout-icons-and-motion/03.07-icons.md` | 9k |
-| 3.8 Images and illustration | `references/03-type-space-layout-icons-and-motion/03.08-images-and-illustration.md` | 8k |
-| 3.9 Motion | `references/03-type-space-layout-icons-and-motion/03.09-motion.md` | 6k |
-| 3.10 Accessibility as design quality | `references/03-type-space-layout-icons-and-motion/03.10-accessibility-as-design-quality.md` | 6k |
-| 3.11 Review checklist for Part 3 | `references/03-type-space-layout-icons-and-motion/03.11-review-checklist-for-part-3.md` | 4k |
+Parts, for browsing. Every chapter and its file: `references/INDEX.md`. Every section with its line range: `references/DEEP-INDEX.md`.
 
-### Part 4. Components, A to M
-
-| Chapter | File | Size |
-| --- | --- | --- |
-| 4.0 Overview | `references/04-components-a-to-m/04.00-overview.md` | 1k |
-| 4.1 Accordions | `references/04-components-a-to-m/04.01-accordions.md` | 5k |
-| 4.2 Alerts and banners | `references/04-components-a-to-m/04.02-alerts-and-banners.md` | 6k |
-| 4.3 Avatars | `references/04-components-a-to-m/04.03-avatars.md` | 4k |
-| 4.4 Badges, tags and status indicators | `references/04-components-a-to-m/04.04-badges-tags-and-status-indicators.md` | 8k |
-| 4.5 Breadcrumbs | `references/04-components-a-to-m/04.05-breadcrumbs.md` | 3k |
-| 4.6 Buttons | `references/04-components-a-to-m/04.06-buttons.md` | 6k |
-| 4.7 Cards | `references/04-components-a-to-m/04.07-cards.md` | 5k |
-| 4.8 Charts and stat tiles | `references/04-components-a-to-m/04.08-charts-and-stat-tiles.md` | 6k |
-| 4.9 Checkboxes, radios and switches | `references/04-components-a-to-m/04.09-checkboxes-radios-and-switches.md` | 5k |
-| 4.10 Code blocks | `references/04-components-a-to-m/04.10-code-blocks.md` | 4k |
-| 4.11 Command palettes | `references/04-components-a-to-m/04.11-command-palettes.md` | 4k |
-| 4.12 Data tables | `references/04-components-a-to-m/04.12-data-tables.md` | 5k |
-| 4.13 Date pickers | `references/04-components-a-to-m/04.13-date-pickers.md` | 4k |
-| 4.14 Dialogs and modals | `references/04-components-a-to-m/04.14-dialogs-and-modals.md` | 4k |
-| 4.15 Dropdown menus | `references/04-components-a-to-m/04.15-dropdown-menus.md` | 4k |
-| 4.16 Empty states | `references/04-components-a-to-m/04.16-empty-states.md` | 3k |
-| 4.17 File upload | `references/04-components-a-to-m/04.17-file-upload.md` | 5k |
-| 4.18 Footers | `references/04-components-a-to-m/04.18-footers.md` | 4k |
-| 4.19 Forms and text inputs | `references/04-components-a-to-m/04.19-forms-and-text-inputs.md` | 5k |
-| 4.20 Headers and top navigation | `references/04-components-a-to-m/04.20-headers-and-top-navigation.md` | 4k |
-| 4.21 Hero sections | `references/04-components-a-to-m/04.21-hero-sections.md` | 5k |
-| 4.22 Links | `references/04-components-a-to-m/04.22-links.md` | 3k |
-| 4.23 Lists | `references/04-components-a-to-m/04.23-lists.md` | 3k |
-| 4.24 Loading and skeletons | `references/04-components-a-to-m/04.24-loading-and-skeletons.md` | 4k |
-| 4.25 Menus and context menus | `references/04-components-a-to-m/04.25-menus-and-context-menus.md` | 5k |
-
-### Part 5. Components, N to Z, and Marketing Sections
-
-| Chapter | File | Size |
-| --- | --- | --- |
-| 5.0 Overview | `references/05-components-n-to-z-and-marketing-sections/05.00-overview.md` | 1k |
-| 5.1 Navigation sidebars | `references/05-components-n-to-z-and-marketing-sections/05.01-navigation-sidebars.md` | 6k |
-| 5.2 Notifications and toasts | `references/05-components-n-to-z-and-marketing-sections/05.02-notifications-and-toasts.md` | 5k |
-| 5.3 Onboarding flows and checklists | `references/05-components-n-to-z-and-marketing-sections/05.03-onboarding-flows-and-checklists.md` | 6k |
-| 5.4 Pagination | `references/05-components-n-to-z-and-marketing-sections/05.04-pagination.md` | 5k |
-| 5.5 Pricing tables | `references/05-components-n-to-z-and-marketing-sections/05.05-pricing-tables.md` | 8k |
-| 5.6 Progress bars and steppers | `references/05-components-n-to-z-and-marketing-sections/05.06-progress-bars-and-steppers.md` | 5k |
-| 5.7 Search | `references/05-components-n-to-z-and-marketing-sections/05.07-search.md` | 5k |
-| 5.8 Selects and comboboxes | `references/05-components-n-to-z-and-marketing-sections/05.08-selects-and-comboboxes.md` | 5k |
-| 5.9 Settings pages | `references/05-components-n-to-z-and-marketing-sections/05.09-settings-pages.md` | 5k |
-| 5.10 Sliders | `references/05-components-n-to-z-and-marketing-sections/05.10-sliders.md` | 4k |
-| 5.11 Tabs and segmented controls | `references/05-components-n-to-z-and-marketing-sections/05.11-tabs-and-segmented-controls.md` | 5k |
-| 5.12 Testimonials | `references/05-components-n-to-z-and-marketing-sections/05.12-testimonials.md` | 4k |
-| 5.13 Timelines and changelogs | `references/05-components-n-to-z-and-marketing-sections/05.13-timelines-and-changelogs.md` | 4k |
-| 5.14 Tooltips and popovers | `references/05-components-n-to-z-and-marketing-sections/05.14-tooltips-and-popovers.md` | 4k |
-| 5.15 User menus and account switchers | `references/05-components-n-to-z-and-marketing-sections/05.15-user-menus-and-account-switchers.md` | 5k |
-| 5.16 Feature grids | `references/05-components-n-to-z-and-marketing-sections/05.16-feature-grids.md` | 4k |
-| 5.17 Logo walls and social proof | `references/05-components-n-to-z-and-marketing-sections/05.17-logo-walls-and-social-proof.md` | 4k |
-| 5.18 Stats and KPI rows | `references/05-components-n-to-z-and-marketing-sections/05.18-stats-and-kpi-rows.md` | 4k |
-| 5.19 Call-to-action sections | `references/05-components-n-to-z-and-marketing-sections/05.19-call-to-action-sections.md` | 3k |
-| 5.20 FAQ sections | `references/05-components-n-to-z-and-marketing-sections/05.20-faq-sections.md` | 3k |
-| 5.21 Comparison tables | `references/05-components-n-to-z-and-marketing-sections/05.21-comparison-tables.md` | 3k |
-| 5.22 Error pages | `references/05-components-n-to-z-and-marketing-sections/05.22-error-pages.md` | 4k |
-| 5.23 Auth screens | `references/05-components-n-to-z-and-marketing-sections/05.23-auth-screens.md` | 5k |
-| 5.24 Chat and AI assistant interfaces | `references/05-components-n-to-z-and-marketing-sections/05.24-chat-and-ai-assistant-interfaces.md` | 5k |
-| 5.25 Dashboards as a whole | `references/05-components-n-to-z-and-marketing-sections/05.25-dashboards-as-a-whole.md` | 4k |
-
-### Part 6. Stack Setup and Full Page Rebuilds
-
-| Chapter | File | Size |
-| --- | --- | --- |
-| 6.0 Overview | `references/06-stack-setup-and-full-page-rebuilds/06.00-overview.md` | 1k |
-| 6.1 Base stylesheet | `references/06-stack-setup-and-full-page-rebuilds/06.01-base-stylesheet.md` | 12k |
-| 6.2 Tailwind v3 configuration | `references/06-stack-setup-and-full-page-rebuilds/06.02-tailwind-v3-configuration.md` | 7k |
-| 6.3 Tailwind v4 configuration | `references/06-stack-setup-and-full-page-rebuilds/06.03-tailwind-v4-configuration.md` | 5k |
-| 6.4 shadcn/ui | `references/06-stack-setup-and-full-page-rebuilds/06.04-shadcn-ui.md` | 13k |
-| 6.5 Design tokens as data | `references/06-stack-setup-and-full-page-rebuilds/06.05-design-tokens-as-data.md` | 6k |
-| 6.6 Lint rules that enforce it | `references/06-stack-setup-and-full-page-rebuilds/06.06-lint-rules-that-enforce-it.md` | 10k |
-| 6.7 Instructions for coding agents | `references/06-stack-setup-and-full-page-rebuilds/06.07-instructions-for-coding-agents.md` | 5k |
-| 6.8 SaaS landing page | `references/06-stack-setup-and-full-page-rebuilds/06.08-saas-landing-page.md` | 8k |
-| 6.9 Developer tool landing page | `references/06-stack-setup-and-full-page-rebuilds/06.09-developer-tool-landing-page.md` | 6k |
-| 6.10 Analytics dashboard | `references/06-stack-setup-and-full-page-rebuilds/06.10-analytics-dashboard.md` | 7k |
-| 6.11 Personal portfolio | `references/06-stack-setup-and-full-page-rebuilds/06.11-personal-portfolio.md` | 5k |
-| 6.12 Documentation home | `references/06-stack-setup-and-full-page-rebuilds/06.12-documentation-home.md` | 5k |
-| 6.13 Blog article page | `references/06-stack-setup-and-full-page-rebuilds/06.13-blog-article-page.md` | 5k |
-| 6.14 Pricing page | `references/06-stack-setup-and-full-page-rebuilds/06.14-pricing-page.md` | 6k |
-| 6.15 Mobile app marketing page | `references/06-stack-setup-and-full-page-rebuilds/06.15-mobile-app-marketing-page.md` | 5k |
-| 6.16 Admin settings area | `references/06-stack-setup-and-full-page-rebuilds/06.16-admin-settings-area.md` | 6k |
-| 6.17 AI product landing page | `references/06-stack-setup-and-full-page-rebuilds/06.17-ai-product-landing-page.md` | 7k |
-| 6.18 Open source project README rendered as a site | `references/06-stack-setup-and-full-page-rebuilds/06.18-open-source-project-readme-rendered-as-a-site.md` | 5k |
-| 6.19 E-commerce product page | `references/06-stack-setup-and-full-page-rebuilds/06.19-e-commerce-product-page.md` | 6k |
-| 6.20 Checklist for Part 6 | `references/06-stack-setup-and-full-page-rebuilds/06.20-checklist-for-part-6.md` | 1k |
-
-### Part 7. The Lexicon
-
-| Chapter | File | Size |
-| --- | --- | --- |
-| 7.0 How the ban works | `references/07-the-lexicon/07.00-how-the-ban-works.md` | 3k |
-| 7.1 Entries 001 to 070: verbs | `references/07-the-lexicon/07.01-entries-001-to-070-verbs.md` | 5k |
-| 7.2 Entries 071 to 140: adjectives, part one | `references/07-the-lexicon/07.02-entries-071-to-140-adjectives-part-one.md` | 6k |
-| 7.3 Entries 141 to 210: adjectives, part two, and first nouns | `references/07-the-lexicon/07.03-entries-141-to-210-adjectives-part-two-and-first-nouns.md` | 6k |
-| 7.4 Entries 211 to 280: nouns and first connectives | `references/07-the-lexicon/07.04-entries-211-to-280-nouns-and-first-connectives.md` | 6k |
-| 7.5 Entries 281 to 350: adverbs, connectives and stock phrases | `references/07-the-lexicon/07.05-entries-281-to-350-adverbs-connectives-and-stock-phrases.md` | 6k |
-
-### Part 8. Sentences, Structure and Microcopy
-
-| Chapter | File | Size |
-| --- | --- | --- |
-| 8.0 Overview | `references/08-sentences-structure-and-microcopy/08.00-overview.md` | 1k |
-| 8.1 How tells work | `references/08-sentences-structure-and-microcopy/08.01-how-tells-work.md` | 2k |
-| 8.2 Tells of framing and argument | `references/08-sentences-structure-and-microcopy/08.02-tells-of-framing-and-argument.md` | 14k |
-| 8.3 Tells of texture | `references/08-sentences-structure-and-microcopy/08.03-tells-of-texture.md` | 7k |
-| 8.4 Tells of layout | `references/08-sentences-structure-and-microcopy/08.04-tells-of-layout.md` | 4k |
-| 8.5 Punctuation and formatting rules | `references/08-sentences-structure-and-microcopy/08.05-punctuation-and-formatting-rules.md` | 5k |
-| 8.6 Microcopy for controls and forms | `references/08-sentences-structure-and-microcopy/08.06-microcopy-for-controls-and-forms.md` | 9k |
-| 8.7 Microcopy for messages and pages | `references/08-sentences-structure-and-microcopy/08.07-microcopy-for-messages-and-pages.md` | 6k |
-| 8.8 Microcopy for publishing and code | `references/08-sentences-structure-and-microcopy/08.08-microcopy-for-publishing-and-code.md` | 8k |
-| 8.9 Voice | `references/08-sentences-structure-and-microcopy/08.09-voice.md` | 5k |
-| 8.10 A full rewrite, start to finish | `references/08-sentences-structure-and-microcopy/08.10-a-full-rewrite-start-to-finish.md` | 3k |
-| 8.11 Prompting a model for plain copy | `references/08-sentences-structure-and-microcopy/08.11-prompting-a-model-for-plain-copy.md` | 2k |
-| 8.12 Quick reference | `references/08-sentences-structure-and-microcopy/08.12-quick-reference.md` | 2k |
-
-### Part 9. Audit and Enforcement
-
-| Chapter | File | Size |
-| --- | --- | --- |
-| 9.0 Overview | `references/09-audit-and-enforcement/09.00-overview.md` | 1k |
-| 9.1 Auditing an existing product | `references/09-audit-and-enforcement/09.01-auditing-an-existing-product.md` | 4k |
-| 9.2 Search commands for visual tells | `references/09-audit-and-enforcement/09.02-search-commands-for-visual-tells.md` | 5k |
-| 9.3 Search commands for verbal tells | `references/09-audit-and-enforcement/09.03-search-commands-for-verbal-tells.md` | 5k |
-| 9.4 What scripts/lint.py checks | `references/09-audit-and-enforcement/09.04-what-scripts-lint-py-checks.md` | 7k |
-| 9.5 CI integration | `references/09-audit-and-enforcement/09.05-ci-integration.md` | 5k |
-| 9.6 Pre-commit hook | `references/09-audit-and-enforcement/09.06-pre-commit-hook.md` | 2k |
-| 9.7 Review rubric | `references/09-audit-and-enforcement/09.07-review-rubric.md` | 3k |
-| 9.8 Ship checklist for a page | `references/09-audit-and-enforcement/09.08-ship-checklist-for-a-page.md` | 3k |
+- Part 1. Ground Rules (1.1 to 1.9)
+- Part 2. Color, Surfaces and Depth (2.1 to 2.12)
+- Part 3. Type, Space, Layout, Icons and Motion (3.1 to 3.11)
+- Part 4. Components, A to M (4.1 to 4.25)
+- Part 5. Components, N to Z, and Marketing Sections (5.1 to 5.25)
+- Part 6. Stack Setup and Full Page Rebuilds (6.1 to 6.20)
+- Part 7. The Lexicon (7.0 to 7.5)
+- Part 8. Sentences, Structure and Microcopy (8.1 to 8.12)
+- Part 9. Audit and Enforcement (9.1 to 9.8)

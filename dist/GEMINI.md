@@ -1,6 +1,15 @@
 # UNSLOP: interface and copy rules
 
-Apply these rules to every interface file and every piece of text a person will read. The full handbook is split into chapters under `.agents/skills/unslop/references/`; the chapter list is `.agents/skills/unslop/references/INDEX.md`. Read only the chapters the task touches.
+Apply these rules to every interface file and every piece of text a person will read. The full handbook is under `.agents/skills/unslop/references/`, behind a deep index. Never read whole chapters: ask the index, then read only the line ranges it prints.
+
+```sh
+python3 .agents/skills/unslop/scripts/find.py --task pricing          # reading list for a kind of task
+python3 .agents/skills/unslop/scripts/find.py focus ring on a button  # best sections for any question
+python3 .agents/skills/unslop/scripts/find.py --text "draft copy"     # banned words in a draft, with replacements
+python3 .agents/skills/unslop/scripts/find.py --tasks                 # every task route
+```
+
+Without Python, search `.agents/skills/unslop/references/DEEP-INDEX.md`: one line per section with its line range.
 
 Before you finish a task, run the checks on the files you changed and fix what they report:
 
