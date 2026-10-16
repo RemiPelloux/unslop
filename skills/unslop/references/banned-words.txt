@@ -1,0 +1,359 @@
+# UNSLOP banned lexicon. One entry per line. Lines starting with # are comments.
+# Single words are matched with common inflections (s, es, d, ed, ing, ly, er, est).
+# Multi-word entries are matched as phrases, case-insensitive, any whitespace.
+
+# --- verbs ---
+delve
+leverage
+utilize
+harness
+unlock
+unleash
+elevate
+empower
+streamline
+revolutionize
+supercharge
+embark
+navigate
+foster
+cultivate
+underscore
+showcase
+spearhead
+bolster
+amplify
+catalyze
+illuminate
+resonate
+transcend
+reimagine
+redefine
+reshape
+envision
+curate
+embrace
+enhance
+enrich
+facilitate
+optimize
+maximize
+ideate
+democratize
+future-proof
+unpack
+immerse
+captivate
+mesmerize
+ignite
+propel
+skyrocket
+boost
+fuel
+intertwine
+underpin
+encompass
+epitomize
+exemplify
+embody
+encapsulate
+burgeon
+flourish
+thrive
+garner
+boast
+herald
+usher
+elucidate
+disrupt
+level up
+dive into
+deep dive
+lean into
+reach out
+weave
+orchestrate
+# --- adjectives ---
+seamless
+robust
+comprehensive
+cutting-edge
+innovative
+groundbreaking
+game-changing
+transformative
+revolutionary
+pivotal
+crucial
+vital
+essential
+paramount
+multifaceted
+intricate
+nuanced
+holistic
+dynamic
+vibrant
+bustling
+thriving
+meticulous
+unparalleled
+unprecedented
+unwavering
+unmatched
+compelling
+captivating
+stunning
+breathtaking
+enchanting
+awe-inspiring
+remarkable
+exceptional
+extraordinary
+profound
+invaluable
+indispensable
+instrumental
+integral
+intuitive
+user-friendly
+frictionless
+effortless
+delightful
+sleek
+elegant
+modern
+next-generation
+next-gen
+state-of-the-art
+world-class
+best-in-class
+industry-leading
+enterprise-grade
+mission-critical
+powerful
+bleeding-edge
+top-notch
+premium
+bespoke
+tailored
+immersive
+engaging
+impactful
+actionable
+insightful
+thought-provoking
+empowering
+visionary
+pioneering
+forward-thinking
+ever-evolving
+ever-changing
+fast-paced
+myriad
+plethora
+diverse
+vast
+boundless
+limitless
+timeless
+iconic
+quintessential
+crisp
+clean
+beautiful
+gorgeous
+slick
+snappy
+blazing
+lightning-fast
+buttery
+magical
+whimsical
+harmonious
+synergistic
+cohesive
+sophisticated
+granular
+nimble
+proactive
+strategic
+noteworthy
+commendable
+exquisite
+impeccable
+flawless
+stellar
+phenomenal
+epic
+mind-blowing
+steadfast
+enduring
+adept
+disruptive
+ai-powered
+ai-driven
+data-driven
+customer-centric
+user-centric
+human-centric
+mission-driven
+purpose-driven
+turnkey
+plug-and-play
+battle-tested
+end-to-end
+all-in-one
+one-stop
+unified
+curated
+handcrafted
+nestled
+# --- nouns ---
+tapestry
+testament
+realm
+landscape
+journey
+odyssey
+symphony
+beacon
+cornerstone
+linchpin
+bedrock
+catalyst
+paradigm
+synergy
+ecosystem
+nexus
+crucible
+mosaic
+kaleidoscope
+labyrinth
+treasure trove
+game-changer
+powerhouse
+juggernaut
+trailblazer
+frontier
+interplay
+intricacies
+complexities
+insight
+takeaway
+superpower
+secret sauce
+north star
+moonshot
+holy grail
+silver bullet
+low-hanging fruit
+best practices
+thought leader
+thought leadership
+value proposition
+bandwidth
+touchpoint
+narrative
+storytelling
+passion
+endeavor
+harmony
+essence
+forefront
+cusp
+crossroads
+underpinning
+arsenal
+blueprint
+solution
+innovation
+engagement
+delight
+magic
+wow factor
+prowess
+excellence
+transformation
+masterpiece
+vibe
+# --- adverbs and connectives ---
+furthermore
+moreover
+additionally
+notably
+importantly
+crucially
+ultimately
+essentially
+fundamentally
+arguably
+undeniably
+undoubtedly
+indeed
+truly
+genuinely
+incredibly
+remarkably
+profoundly
+inherently
+invariably
+interestingly
+overall
+thereby
+whereby
+albeit
+aforementioned
+# --- phrases ---
+in conclusion
+in summary
+to summarize
+all in all
+at its core
+at the end of the day
+needless to say
+worth noting
+important to note
+in today's
+digital age
+digital landscape
+let's dive
+buckle up
+next level
+the power of
+at the forefront
+on the cusp
+pave the way
+bridge the gap
+stand out from the crowd
+cut through the noise
+ahead of the curve
+push the boundaries
+outside the box
+a wide range of
+a wide array of
+look no further
+whether you're
+more than just
+imagine a world
+picture this
+here's the thing
+the best part
+i hope this helps
+happy coding
+feel free to
+don't hesitate
+great question
+as an ai
+i'd be happy to
+crafted with
+designed with you in mind
+built for the future
+the future of
+with ease
+made simple
+take your
+in the world of
+when it comes to
+the art of
+the heart of

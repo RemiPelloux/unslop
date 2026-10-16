@@ -1,0 +1,7 @@
+interface:
+  display_name: "UNSLOP"
+  short_description: "Interface and copy rules without shadows, gradients, emoji or filler words"
+  brand_color: "#B4441C"
+  default_prompt: "Apply the UNSLOP rules to this interface and its copy, then run the checks."
+policy:
+  allow_implicit_invocation: true

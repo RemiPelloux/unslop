@@ -1,0 +1,40 @@
+---
+name: unslop
+description: Design and copy rules for interfaces and text that must not look or read as machine-made. Use when building, styling or reviewing any user interface (HTML, CSS, Tailwind, React, Vue, Svelte, shadcn/ui), picking colors, type, spacing, icons or components, writing landing pages, UI copy, error messages, docs, READMEs, release notes or commit messages, or when asked to make something look or sound less generic or less like AI output. Bans box shadows, gradients, glass and blur, emoji, glowing status pills and 350 overused words, and ships scripts that check for all of them. Not for backend code with no text a person reads.
+metadata:
+  version: "{{VERSION}}"
+  source: "https://github.com/remipelloux/unslop"
+---
+
+# UNSLOP
+
+Rules for interfaces and copy that do not carry the generated look: no indigo buttons, no `rounded-2xl shadow-lg` cards, no gradient headlines, no emoji, no LIVE pills, no `seamless` or `unlock`. Every rule has values and a check.
+
+This file holds the rules you need on every task. The full handbook ({{TOTAL_CHARS}} characters) is split into chapters under `references/`. Read only the chapters the task touches. All paths below are relative to the folder this file is in.
+
+## Workflow
+
+1. **Before writing interface code:** apply the hard rules and tokens below. For each component or page type in the task, open its chapter from the index at the end of this file (for example a pricing page: `5.5`, `6.14`).
+2. **Before writing copy:** apply the copy rules below. The most frequent banned words are listed here; the full list of 350 is `references/banned-words.txt`. When a word feels like filler, search for it there, then read its entry through `references/lexicon-index.md`.
+3. **Before you finish:** run the checks and fix everything they report.
+
+```sh
+python3 scripts/scan.py path/to/changed/files   # CSS, HTML, JSX, TSX, Vue, Svelte, locale JSON, Markdown
+python3 scripts/lint.py path/to/file.md          # Markdown only, stricter on prose
+```
+
+Report the output in your reply. Never claim compliance you did not check. A line that must break a rule on purpose takes an `unslop-ignore` comment and a reason.
+
+{{CORE}}
+
+## Most frequent banned words
+
+These are the entries models produce most. Any form counts. The other entries are in `references/banned-words.txt`.
+
+{{TOP_WORDS}}
+
+## Reference index
+
+Each chapter is one file. Sizes are in thousands of characters, so you can judge the cost of reading one.
+
+{{INDEX}}

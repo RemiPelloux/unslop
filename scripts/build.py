@@ -4,7 +4,8 @@
 Concatenates the parts in filename order, appends the generated appendix
 (full banned list and lexicon index), replaces the <!-- TOC --> marker with
 a table of contents for ## and ### headings, then runs the linter on the
-result. Exit code is non-zero if the linter finds anything.
+result, then packages the skill and adapters (scripts/build_skill.py).
+Exit code is non-zero if the linter finds anything.
 """
 import os
 import re
@@ -123,7 +124,9 @@ def main():
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(body)
     print("wrote %s from %d parts" % (os.path.relpath(OUT, ROOT), len(files)))
-    return subprocess.call([sys.executable, os.path.join(ROOT, "scripts", "lint.py"), OUT])
+    status = subprocess.call([sys.executable, os.path.join(ROOT, "scripts", "lint.py"), OUT])
+    status |= subprocess.call([sys.executable, os.path.join(ROOT, "scripts", "build_skill.py")])
+    return status
 
 
 if __name__ == "__main__":

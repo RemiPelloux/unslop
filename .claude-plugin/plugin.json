@@ -1,0 +1,7 @@
+{
+  "name": "unslop",
+  "version": "1.0.0",
+  "description": "Interface and copy rules without shadows, gradients, glass, emoji, status pills or 350 overused words, with scripts that check for them.",
+  "author": { "name": "Remi Pelloux" },
+  "repository": "https://github.com/remipelloux/unslop"
+}

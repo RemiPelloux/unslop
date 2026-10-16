@@ -10,8 +10,9 @@ Checks, per file:
      code blocks and inline code spans. Quoting a banned word inside inline
      code or a ```slop fence is a mention, not a use, and is allowed.
   4. No exclamation marks in prose.
-  5. In fenced code that is not tagged `slop`: no shadows, no gradients,
-     no backdrop blur. `box-shadow: none` and `shadow-none` are fine.
+  5. In fenced code that is not tagged `slop`: no shadows, no Tailwind ring
+     utilities, no gradients, no backdrop blur. `box-shadow: none` and
+     `shadow-none` are fine.
 
 Exit code is 1 when any violation is found.
 """
@@ -19,8 +20,25 @@ import os
 import re
 import sys
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-WORDS_FILE = os.path.join(ROOT, "src", "banned-words.txt")
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def find_words_file():
+    """banned-words.txt lives in src/ in the source repo and in references/
+    inside the packaged skill. UNSLOP_WORDS overrides both."""
+    candidates = [
+        os.environ.get("UNSLOP_WORDS", ""),
+        os.path.join(HERE, "..", "references", "banned-words.txt"),
+        os.path.join(HERE, "..", "src", "banned-words.txt"),
+        os.path.join(HERE, "banned-words.txt"),
+    ]
+    for c in candidates:
+        if c and os.path.isfile(c):
+            return os.path.normpath(c)
+    sys.exit("lint.py: banned-words.txt not found; set UNSLOP_WORDS")
+
+
+WORDS_FILE = find_words_file()
 
 EMOJI = re.compile(
     "["
@@ -140,11 +158,15 @@ def lint(path, patterns):
     return problems
 
 
+def load_patterns():
+    return [(e, entry_pattern(e)) for e in load_entries()]
+
+
 def main(argv):
     if len(argv) < 2:
         print(__doc__)
         return 2
-    patterns = [(e, entry_pattern(e)) for e in load_entries()]
+    patterns = load_patterns()
     total = 0
     for path in argv[1:]:
         problems = lint(path, patterns)

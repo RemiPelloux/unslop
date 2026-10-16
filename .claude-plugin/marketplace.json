@@ -1,0 +1,12 @@
+{
+  "name": "unslop",
+  "owner": { "name": "Remi Pelloux" },
+  "plugins": [
+    {
+      "name": "unslop",
+      "source": "./",
+      "description": "Interface and copy rules without shadows, gradients, glass, emoji, status pills or 350 overused words, with scripts that check for them.",
+      "version": "1.0.0"
+    }
+  ]
+}
